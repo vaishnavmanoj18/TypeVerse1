@@ -1,0 +1,689 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TypeVerse - Master Your Typing Skills</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #f5f3ff;
+    --card: #ffffff;
+    --text: #1e1b4b;
+    --muted: #77748c;
+    --primary: #7c3aed;
+    --secondary: #4f46e5;
+    --border: #e5e1f5;
+}
+
+body.dark {
+    --bg: #111124;
+    --card: #1d1b35;
+    --text: #f5f3ff;
+    --muted: #aaa5c5;
+    --border: #383451;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: .3s;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 7%;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+header button {
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.hero h1 {
+    font-size: clamp(30px, 5vw, 45px);
+    margin-bottom: 10px;
+}
+
+.hero h1 span {
+    color: var(--primary);
+}
+
+.hero p {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.stat {
+    background: var(--card);
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    text-align: center;
+}
+
+.stat h2 {
+    color: var(--primary);
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+.stat p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.panel {
+    background: var(--card);
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    margin-bottom: 22px;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+select {
+    padding: 11px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+}
+
+.text-display {
+    background: var(--bg);
+    padding: 22px;
+    border-radius: 12px;
+    font-size: 19px;
+    line-height: 1.9;
+    margin-bottom: 15px;
+    min-height: 120px;
+    overflow-wrap: anywhere;
+}
+
+.correct {
+    color: #16a34a;
+}
+
+.incorrect {
+    color: #ef4444;
+    background: #fee2e2;
+    border-radius: 3px;
+}
+
+.current {
+    border-bottom: 3px solid var(--primary);
+}
+
+textarea {
+    width: 100%;
+    min-height: 130px;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    resize: vertical;
+    outline: none;
+}
+
+textarea:focus {
+    border-color: var(--primary);
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.btn {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+    background: var(--primary);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    background: var(--secondary);
+}
+
+.btn.secondary {
+    background: #e9d5ff;
+    color: #581c87;
+}
+
+.progress {
+    width: 100%;
+    height: 9px;
+    background: var(--border);
+    border-radius: 20px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.progress div {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #7c3aed, #06b6d4);
+    transition: width .2s;
+}
+
+.section-title {
+    margin-bottom: 15px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+.history-item span:last-child {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.level-info {
+    color: var(--muted);
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.result {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    background: var(--bg);
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.result h2 {
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+@media(max-width:700px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    header {
+        padding: 16px 5%;
+    }
+
+    .container {
+        padding: 12px;
+    }
+
+    .panel {
+        padding: 17px;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">⌨️ Type<span>Verse</span></div>
+    <button onclick="toggleTheme()" id="themeBtn">🌙 Dark Mode</button>
+</header>
+
+<div class="container">
+
+    <section class="hero">
+        <h1>Welcome to <span>TypeVerse</span> 🚀</h1>
+        <p>Practice typing, improve your speed and accuracy, and become a typing champion!</p>
+    </section>
+
+    <section class="stats">
+        <div class="stat">
+            <h2 id="wpm">0</h2>
+            <p>Words Per Minute</p>
+        </div>
+        <div class="stat">
+            <h2 id="accuracy">100%</h2>
+            <p>Accuracy</p>
+        </div>
+        <div class="stat">
+            <h2 id="timer">60</h2>
+            <p>Time Remaining</p>
+        </div>
+        <div class="stat">
+            <h2 id="errors">0</h2>
+            <p>Errors</p>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2 class="section-title">⌨️ Typing Test</h2>
+
+        <div class="controls">
+            <select id="mode" onchange="newTest()">
+                <option value="classic">Classic Mode</option>
+                <option value="quotes">Quotes Mode</option>
+                <option value="coding">Coding Mode</option>
+            </select>
+
+            <select id="difficulty" onchange="newTest()">
+                <option value="easy">Easy</option>
+                <option value="medium" selected>Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+
+            <select id="duration" onchange="newTest()">
+                <option value="30">30 Seconds</option>
+                <option value="60" selected>60 Seconds</option>
+                <option value="120">120 Seconds</option>
+            </select>
+        </div>
+
+        <div class="text-display" id="textDisplay"></div>
+
+        <textarea id="typingInput"
+        placeholder="Start typing the text above here..."
+        oninput="handleTyping()"
+        spellcheck="false"></textarea>
+
+        <div class="progress">
+            <div id="progressBar"></div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn" onclick="startTest()">▶ Start Test</button>
+            <button class="btn secondary" onclick="newTest()">↻ Restart</button>
+        </div>
+
+        <div class="result" id="result">
+            <h2>🎉 Test Completed!</h2>
+            <p id="resultText"></p>
+            <br>
+            <button class="btn" onclick="newTest()">Try Again</button>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2 class="section-title">🏆 Your Progress</h2>
+        <h3>⭐ XP Points: <span id="xp">0</span></h3>
+        <p class="level-info">Level: <strong id="level">Beginner</strong></p>
+        <p class="level-info">Complete typing tests to earn XP and improve your skills.</p>
+    </section>
+
+    <section class="panel">
+        <h2 class="section-title">📊 Typing History</h2>
+        <div id="history">
+            <p style="color:var(--muted)">No typing history yet. Complete your first test!</p>
+        </div>
+        <div class="buttons">
+            <button class="btn secondary" onclick="downloadHistory()">⬇ Download History</button>
+            <button class="btn secondary" onclick="clearHistory()">🗑 Clear History</button>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    © 2026 TypeVerse | Master Your Typing Skills 🚀
+</footer>
+
+<script>
+const passages = {
+    classic: {
+        easy: "Practice makes a person better. Keep learning every day and improve your typing skills with patience.",
+        medium: "Technology has changed the world in many ways. Learning new skills helps us become more confident and productive.",
+        hard: "Consistency, concentration, and determination are essential qualities for achieving excellence in any professional journey."
+    },
+    quotes: {
+        easy: "Never stop learning because life never stops teaching.",
+        medium: "Success is the result of preparation, hard work, and learning from failure.",
+        hard: "Great achievements require persistent dedication, thoughtful decisions, and the courage to overcome unexpected challenges."
+    },
+    coding: {
+        easy: "let name = 'TypeVerse'; console.log(name);",
+        medium: "function greet(user) { return 'Hello ' + user; }",
+        hard: "const calculate = (a, b) => { return a * b + Math.sqrt(a); };"
+    }
+};
+
+let originalText = "";
+let started = false;
+let finished = false;
+let startTime = null;
+let timerInterval = null;
+let remaining = 60;
+let totalErrors = 0;
+let xp = Number(localStorage.getItem("tvXP")) || 0;
+let history = JSON.parse(localStorage.getItem("tvHistory") || "[]");
+
+const input = document.getElementById("typingInput");
+
+function escapeHTML(str) {
+    return str.replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+function newTest() {
+    clearInterval(timerInterval);
+
+    started = false;
+    finished = false;
+    startTime = null;
+    remaining = Number(document.getElementById("duration").value);
+    totalErrors = 0;
+
+    originalText = passages[
+        document.getElementById("mode").value
+    ][
+        document.getElementById("difficulty").value
+    ];
+
+    input.value = "";
+    input.disabled = false;
+    input.placeholder = "Start typing the text above here...";
+
+    document.getElementById("timer").textContent = remaining;
+    document.getElementById("wpm").textContent = "0";
+    document.getElementById("accuracy").textContent = "100%";
+    document.getElementById("errors").textContent = "0";
+    document.getElementById("progressBar").style.width = "0%";
+    document.getElementById("result").style.display = "none";
+
+    renderText();
+}
+
+function renderText() {
+    const typed = input.value;
+    let html = "";
+
+    for (let i = 0; i < originalText.length; i++) {
+        let cls = "";
+
+        if (i < typed.length) {
+            cls = typed[i] === originalText[i] ? "correct" : "incorrect";
+        } else if (i === typed.length) {
+            cls = "current";
+        }
+
+        html += `<span class="${cls}">${escapeHTML(originalText[i])}</span>`;
+    }
+
+    document.getElementById("textDisplay").innerHTML = html;
+}
+
+function startTest() {
+    if (started || finished) return;
+
+    started = true;
+    startTime = Date.now();
+
+    timerInterval = setInterval(() => {
+        const elapsed = (Date.now() - startTime) / 1000;
+        remaining = Math.max(0, Number(document.getElementById("duration").value) - Math.floor(elapsed));
+
+        document.getElementById("timer").textContent = remaining;
+
+        updateStats();
+
+        if (remaining <= 0) endTest();
+    }, 200);
+
+    input.focus();
+}
+
+function handleTyping() {
+    if (finished) return;
+
+    if (!started && input.value.length > 0) {
+        startTest();
+    }
+
+    if (!started) return;
+
+    const typed = input.value;
+    totalErrors = 0;
+
+    for (let i = 0; i < typed.length; i++) {
+        if (typed[i] !== originalText[i]) totalErrors++;
+    }
+
+    renderText();
+    updateStats();
+
+    document.getElementById("progressBar").style.width =
+        Math.min(100, typed.length / originalText.length * 100) + "%";
+
+    if (typed.length >= originalText.length) {
+        endTest();
+    }
+}
+
+function updateStats() {
+    if (!started || !startTime) return;
+
+    const elapsed = Math.max(0.1, (Date.now() - startTime) / 1000);
+    const typed = input.value;
+
+    let correct = 0;
+    for (let i = 0; i < typed.length; i++) {
+        if (typed[i] === originalText[i]) correct++;
+    }
+
+    const accuracy = typed.length ? Math.round(correct / typed.length * 100) : 100;
+    const wpm = Math.round((correct / 5) / (elapsed / 60));
+
+    document.getElementById("wpm").textContent = wpm;
+    document.getElementById("accuracy").textContent = accuracy + "%";
+    document.getElementById("errors").textContent = totalErrors;
+}
+
+function endTest() {
+    if (finished) return;
+
+    finished = true;
+    started = false;
+    clearInterval(timerInterval);
+    input.disabled = true;
+
+    const elapsed = startTime
+        ? Math.max(1, Math.min(Number(document.getElementById("duration").value),
+            (Date.now() - startTime) / 1000))
+        : 0;
+
+    const typed = input.value;
+    let correct = 0;
+
+    for (let i = 0; i < typed.length; i++) {
+        if (typed[i] === originalText[i]) correct++;
+    }
+
+    const wpm = elapsed > 0 ? Math.round((correct / 5) / (elapsed / 60)) : 0;
+    const accuracy = typed.length ? Math.round(correct / typed.length * 100) : 100;
+
+    document.getElementById("wpm").textContent = wpm;
+    document.getElementById("accuracy").textContent = accuracy + "%";
+
+    xp += Math.max(5, Math.round(wpm / 2));
+    localStorage.setItem("tvXP", xp);
+    updateXP();
+
+    const record = {
+        date: new Date().toLocaleString(),
+        wpm,
+        accuracy
+    };
+
+    history.unshift(record);
+    history = history.slice(0, 20);
+
+    localStorage.setItem("tvHistory", JSON.stringify(history));
+    showHistory();
+
+    document.getElementById("resultText").textContent =
+        `Your speed: ${wpm} WPM | Accuracy: ${accuracy}% | Errors: ${totalErrors}`;
+
+    document.getElementById("result").style.display = "block";
+}
+
+function updateXP() {
+    document.getElementById("xp").textContent = xp;
+
+    let level = "Beginner";
+    if (xp >= 500) level = "Typing Expert";
+    else if (xp >= 250) level = "Pro Typist";
+    else if (xp >= 100) level = "Advanced";
+    else if (xp >= 50) level = "Intermediate";
+
+    document.getElementById("level").textContent = level;
+}
+
+function showHistory() {
+    const container = document.getElementById("history");
+
+    if (!history.length) {
+        container.innerHTML = '<p style="color:var(--muted)">No typing history yet.</p>';
+        return;
+    }
+
+    container.innerHTML = history.map(item => `
+        <div class="history-item">
+            <span>${escapeHTML(item.date)}</span>
+            <span>${Number(item.wpm)} WPM · ${Number(item.accuracy)}%</span>
+        </div>
+    `).join("");
+}
+
+function downloadHistory() {
+    if (!history.length) {
+        alert("No history available to download!");
+        return;
+    }
+
+    const rows = [
+        ["Date", "WPM", "Accuracy"],
+        ...history.map(item => [item.date, item.wpm, item.accuracy])
+    ];
+
+    const csv = rows.map(row =>
+        row.map(value => '"' + String(value).replace(/"/g, '""') + '"').join(",")
+    ).join("\n");
+
+    const blob = new Blob([csv], {type: "text/csv"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = "TypeVerse-History.csv";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function clearHistory() {
+    if (!confirm("Are you sure you want to clear your typing history?")) return;
+
+    history = [];
+    localStorage.removeItem("tvHistory");
+    showHistory();
+}
+
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+
+    const dark = document.body.classList.contains("dark");
+    document.getElementById("themeBtn").textContent =
+        dark ? "☀️ Light Mode" : "🌙 Dark Mode";
+
+    localStorage.setItem("tvTheme", dark ? "dark" : "light");
+}
+
+if (localStorage.getItem("tvTheme") === "dark") {
+    document.body.classList.add("dark");
+    document.getElementById("themeBtn").textContent = "☀️ Light Mode";
+}
+
+updateXP();
+showHistory();
+newTest();
+</script>
+
+</body>
+</html>
